@@ -24,6 +24,7 @@ from core.prompt.advanced_prompt_transform import AdvancedPromptTransform
 from core.prompt.entities.advanced_prompt_entities import CompletionModelPromptTemplate, MemoryConfig
 from core.prompt.utils.prompt_message_util import PromptMessageUtil
 from core.variables import ArrayFileSegment, FileSegment
+from core.workflow.constants import SYSTEM_VARIABLE_NODE_ID
 from core.workflow.entities.node_entities import NodeRunMetadataKey, NodeRunResult
 from core.workflow.entities.variable_pool import VariablePool
 from core.workflow.enums import SystemVariableKey
@@ -114,8 +115,16 @@ class LLMNode(BaseNode):
             )
 
             # fetch prompt messages
+            if node_data.memory:
+                query = variable_pool.get((SYSTEM_VARIABLE_NODE_ID, SystemVariableKey.QUERY))
+                if not query:
+                    raise ValueError("Query not found")
+                query = query.text
+            else:
+                query = None
+
             prompt_messages, stop = self._fetch_prompt_messages(
-                query=variable_pool.get_any(["sys", SystemVariableKey.QUERY.value]) if node_data.memory else None,
+                query=query,
                 query_prompt_template=node_data.memory.query_prompt_template if node_data.memory else None,
                 inputs=inputs,
                 files=files,

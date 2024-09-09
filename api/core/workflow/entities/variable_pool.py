@@ -11,12 +11,11 @@ from core.variables import Segment, SegmentGroup, Variable
 from core.workflow.enums import SystemVariableKey
 from factories import variable_factory
 
+from ..constants import CONVERSATION_VARIABLE_NODE_ID, ENVIRONMENT_VARIABLE_NODE_ID, SYSTEM_VARIABLE_NODE_ID
+
 VariableValue = Union[str, int, float, dict, list, File]
 
 
-SYSTEM_VARIABLE_NODE_ID = "sys"
-ENVIRONMENT_VARIABLE_NODE_ID = "env"
-CONVERSATION_VARIABLE_NODE_ID = "conversation"
 VARIABLE_PATTERN = re.compile(r"\{\{#([a-zA-Z0-9_]{1,50}(?:\.[a-zA-Z_][a-zA-Z0-9_]{0,29}){1,10})#\}\}")
 
 
