@@ -1,4 +1,4 @@
-- google
+- google_custom_search
 - bing
 - perplexity
 - duckduckgo
@@ -36,3 +36,4 @@
 - feishu_message
 - slack
 - tianditu
+- google

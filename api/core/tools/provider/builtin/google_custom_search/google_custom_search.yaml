@@ -1,0 +1,47 @@
+identity:
+  author: "Y.Masui"
+  name: "google_custom_search"
+  label:
+    en_US: "Google Custom Search"
+    zh_Hans: "Google Custom Search"
+    pt_BR: "Google Custom Search"
+  description:
+    en_US: "Searches the Internet using Google Custom Search and returns web pages in JSON"
+    zh_Hans: "Searches the Internet using Google Custom Search and returns web pages in JSON"
+    pt_BR: "Searches the Internet using Google Custom Search and returns web pages in JSONh"
+  icon: "icon.svg"
+
+credentials_for_provider:
+  google_custom_search_api_key:
+    type: "secret-input"
+    required: true
+    label:
+      en_US: "Google Custom Search API key"
+      zh_Hans: "Google Custom Search API key"
+      pt_BR: "Google Custom Search API key"
+    placeholder:
+      en_US: "Please input your API key"
+      zh_Hans: "请输入你的 API key"
+      pt_BR: "Please input your API key"
+    help:
+      en_US: "Get your API key from Google"
+      zh_Hans: "从 Google 获取您的 API key"
+      pt_BR: "Get your API key from Google"
+    url: "https://developers.google.com/custom-search/v1/overview"
+
+  google_custom_search_engine_id:
+    type: "text-input"
+    required: true
+    label:
+      en_US: "Google Custom Search Engine ID"
+      zh_Hans: "Google Custom Search Engine ID"
+      pt_BR: "Google Custom Search Engine ID"
+    placeholder:
+      en_US: "Please input your Engine ID"
+      zh_Hans: "请输入你的 Engine ID"
+      pt_BR: "Please input your Engine ID"
+    help:
+      en_US: "Get your Engine ID from Google"
+      zh_Hans: "从 Google 获取您的 Engine ID"
+      pt_BR: "Get your Engine ID from Google"
+    url: "https://programmablesearchengine.google.com/controlpanel/all"

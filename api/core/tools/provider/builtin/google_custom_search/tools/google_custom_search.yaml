@@ -1,0 +1,41 @@
+identity:
+  name: google_custom_search
+  author: "Y.Masui"
+  label:
+    en_US: "Search by Google"
+    zh_Hans: "Search by Google"
+    pt_BR: "Search by Google"
+description:
+  human:
+    en_US: A tool for performing a Google Custom Search and extracting snippets and webpages.Input should be a search query.
+    zh_Hans: 一个用于执行 Google SERP 搜索并提取片段和网页的工具。输入应该是一个搜索查询。
+    pt_BR: A tool for performing a Google SERP search and extracting snippets and webpages.Input should be a search query.
+  llm: A tool for performing a Google Custom Search and extracting webpages. Input should be a search query.
+parameters:
+  - name: query
+    type: string
+    required: true
+    label:
+      en_US: Query string
+      zh_Hans: 查询语句
+      pt_BR: Query string
+    human_description:
+      en_US: Used for searching
+      zh_Hans: 用于搜索网页内容
+      pt_BR: Used for searching
+    llm_description: keywords for searching
+    form: llm
+  - name: num_results
+    type: number
+    default: 10
+    required: false
+    label:
+      en_US: Number of results
+      zh_Hans: Number of results
+      pt_BR: Number of results
+    human_description:
+      en_US: Number of search results (1-10)
+      zh_Hans: Number of search results (1-10)
+      pt_BR: Number of search results (1-10)
+    llm_description: Number of search results (1-10)
+    form: llm
