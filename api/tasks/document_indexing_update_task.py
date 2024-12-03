@@ -6,7 +6,7 @@ import click
 from celery import shared_task
 from werkzeug.exceptions import NotFound
 
-from core.indexing_runner import DocumentIsPausedException, IndexingRunner
+from core.indexing_runner import DocumentIsPausedError, IndexingRunner
 from core.rag.index_processor.index_processor_factory import IndexProcessorFactory
 from extensions.ext_database import db
 from models.dataset import Dataset, Document, DocumentSegment
@@ -30,7 +30,7 @@ def document_indexing_update_task(dataset_id: str, document_id: str):
         raise NotFound("Document not found")
 
     document.indexing_status = "parsing"
-    document.processing_started_at = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+    document.processing_started_at = datetime.datetime.now(datetime.UTC).replace(tzinfo=None)
     db.session.commit()
 
     # delete all document segment and index
@@ -69,7 +69,7 @@ def document_indexing_update_task(dataset_id: str, document_id: str):
         indexing_runner.run([document])
         end_at = time.perf_counter()
         logging.info(click.style("update document: {} latency: {}".format(document.id, end_at - start_at), fg="green"))
-    except DocumentIsPausedException as ex:
+    except DocumentIsPausedError as ex:
         logging.info(click.style(str(ex), fg="yellow"))
     except Exception:
         pass

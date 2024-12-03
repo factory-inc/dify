@@ -1,10 +1,7 @@
-import os
-import sys
 import json
 from typing import Any, Union
 
 from googleapiclient.discovery import build
-from newspaper import Article
 
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
@@ -14,11 +11,10 @@ class CustomSearchAPI:
     """
     Google Custom Search tool provider.
     """
-
     api_key: str = None
     engine_id: str = None
 
-    def __init__(self, api_key: str, engine_id : str) -> None:
+    def __init__(self, api_key: str, engine_id: str) -> None:
         """Google Custom Search tool provider."""
         self.api_key = api_key
         self.engine_id = engine_id
@@ -36,17 +32,11 @@ class CustomSearchAPI:
 
         result = []
         for item in response['items']:
-            try:
-                article = Article(item['link'])
-                article.download()
-                article.parse()
-                text = article.text
-                result.append({
-                    "body": text,
-                    "title": article.title,
-                    "url": item['link']})
-            except:
-                pass
+            result.append({
+                "title": item.get('title', ''),
+                "snippet": item.get('snippet', ''),
+                "url": item.get('link', '')
+            })
                 
         return json.dumps({
             "search_provider": "Google Custom Search",
@@ -69,4 +59,3 @@ class GoogleCustomSearchTool(BuiltinTool):
         engine_id = self.runtime.credentials['google_custom_search_engine_id']
         result = CustomSearchAPI(api_key, engine_id).run(query, num_results=num_results)
         return self.create_text_message(text=result)
-    

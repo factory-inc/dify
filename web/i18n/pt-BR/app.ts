@@ -62,6 +62,14 @@ const translation = {
     appTypeRequired: 'Por favor, selecione um tipo de aplicativo',
     appCreated: 'Aplicativo criado',
     appCreateFailed: 'Falha ao criar aplicativo',
+    caution: 'Cuidado',
+    appCreateDSLErrorPart1: 'Uma diferença significativa nas versões DSL foi detectada. Forçar a importação pode causar mau funcionamento do aplicativo.',
+    appCreateDSLErrorPart4: 'Versão DSL suportada pelo sistema:',
+    Confirm: 'Confirmar',
+    appCreateDSLErrorTitle: 'Incompatibilidade de versão',
+    appCreateDSLWarning: 'Cuidado: a diferença de versão DSL pode afetar determinados recursos',
+    appCreateDSLErrorPart3: 'Versão DSL do aplicativo atual:',
+    appCreateDSLErrorPart2: 'Você quer continuar?',
   },
   editApp: 'Editar Informações',
   editAppTitle: 'Editar Informações do Aplicativo',
@@ -122,7 +130,17 @@ const translation = {
       removeConfirmTitle: 'Remover configuração de {{key}}?',
       removeConfirmContent: 'A configuração atual está em uso, removê-la desligará o recurso de Rastreamento.',
     },
+    view: 'Vista',
   },
+  answerIcon: {
+    descriptionInExplore: 'Se o ícone do WebApp deve ser usado para substituir 🤖 no Explore',
+    description: 'Se o ícone WebApp deve ser usado para substituir 🤖 no aplicativo compartilhado',
+    title: 'Use o ícone do WebApp para substituir 🤖',
+  },
+  importFromDSLUrlPlaceholder: 'Cole o link DSL aqui',
+  importFromDSLUrl: 'Do URL',
+  importFromDSLFile: 'Do arquivo DSL',
+  importFromDSL: 'Importar de DSL',
 }
 
 export default translation

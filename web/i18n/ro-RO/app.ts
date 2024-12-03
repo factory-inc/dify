@@ -62,6 +62,14 @@ const translation = {
     appTypeRequired: 'Vă rugăm să selectați un tip de aplicație',
     appCreated: 'Aplicația a fost creată',
     appCreateFailed: 'Crearea aplicației a eșuat',
+    caution: 'Prudență',
+    appCreateDSLErrorPart2: 'Vrei să continui?',
+    Confirm: 'Confirma',
+    appCreateDSLErrorTitle: 'Incompatibilitate versiune',
+    appCreateDSLWarning: 'Atenție: diferența de versiune DSL poate afecta anumite caracteristici',
+    appCreateDSLErrorPart3: 'Versiunea DSL a aplicației curente:',
+    appCreateDSLErrorPart1: 'A fost detectată o diferență semnificativă în versiunile DSL. Forțarea importului poate cauza funcționarea defectuoasă a aplicației.',
+    appCreateDSLErrorPart4: 'Versiune DSL suportată de sistem:',
   },
   editApp: 'Editează Info',
   editAppTitle: 'Editează Info Aplicație',
@@ -122,7 +130,17 @@ const translation = {
       removeConfirmTitle: 'Eliminați configurația {{key}}?',
       removeConfirmContent: 'Configurația curentă este în uz, eliminarea acesteia va dezactiva funcția de Urmărire.',
     },
+    view: 'Vedere',
   },
+  answerIcon: {
+    descriptionInExplore: 'Dacă să utilizați pictograma WebApp pentru a înlocui 🤖 în Explore',
+    description: 'Dacă se utilizează pictograma WebApp pentru a înlocui 🤖 în aplicația partajată',
+    title: 'Utilizați pictograma WebApp pentru a înlocui 🤖',
+  },
+  importFromDSL: 'Import din DSL',
+  importFromDSLUrl: 'De la URL',
+  importFromDSLUrlPlaceholder: 'Lipiți linkul DSL aici',
+  importFromDSLFile: 'Din fișierul DSL',
 }
 
 export default translation

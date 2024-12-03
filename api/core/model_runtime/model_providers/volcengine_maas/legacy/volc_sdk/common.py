@@ -1,5 +1,6 @@
 import json
 import random
+from collections import UserDict
 from datetime import datetime
 
 
@@ -10,9 +11,9 @@ class ChatRole:
     FUNCTION = "function"
 
 
-class _Dict(dict):
-    __setattr__ = dict.__setitem__
-    __getattr__ = dict.__getitem__
+class _Dict(UserDict):
+    __setattr__ = UserDict.__setitem__
+    __getattr__ = UserDict.__getitem__
 
     def __missing__(self, key):
         return None
@@ -43,9 +44,7 @@ def json_to_object(json_str, req_id=None):
 
 
 def gen_req_id():
-    return datetime.now().strftime("%Y%m%d%H%M%S") + format(
-        random.randint(0, 2 ** 64 - 1), "020X"
-    )
+    return datetime.now().strftime("%Y%m%d%H%M%S") + format(random.randint(0, 2**64 - 1), "020X")
 
 
 class SSEDecoder:
@@ -53,13 +52,13 @@ class SSEDecoder:
         self.source = source
 
     def _read(self):
-        data = b''
+        data = b""
         for chunk in self.source:
             for line in chunk.splitlines(True):
                 data += line
-                if data.endswith((b'\r\r', b'\n\n', b'\r\n\r\n')):
+                if data.endswith((b"\r\r", b"\n\n", b"\r\n\r\n")):
                     yield data
-                    data = b''
+                    data = b""
         if data:
             yield data
 
@@ -67,13 +66,13 @@ class SSEDecoder:
         for chunk in self._read():
             for line in chunk.splitlines():
                 # skip comment
-                if line.startswith(b':'):
+                if line.startswith(b":"):
                     continue
 
-                if b':' in line:
-                    field, value = line.split(b':', 1)
+                if b":" in line:
+                    field, value = line.split(b":", 1)
                 else:
-                    field, value = line, b''
+                    field, value = line, b""
 
-                if field == b'data' and len(value) > 0:
+                if field == b"data" and len(value) > 0:
                     yield value

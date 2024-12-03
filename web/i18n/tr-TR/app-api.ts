@@ -10,7 +10,7 @@ const translation = {
   pause: 'Duraklat',
   playing: 'Oynatılıyor',
   loading: 'Yükleniyor',
-  merMaind: {
+  merMaid: {
     rerender: 'Yeniden İşleme',
   },
   never: 'Asla',
@@ -77,7 +77,9 @@ const translation = {
     requestBody: 'Request Body',
     pathParams: 'Path Params',
     query: 'Query',
+    toc: 'Içeriği',
   },
+  regenerate: 'Yenilemek',
 }
 
 export default translation

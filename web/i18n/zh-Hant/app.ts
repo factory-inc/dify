@@ -61,6 +61,14 @@ const translation = {
     appTypeRequired: '請選擇應用型別',
     appCreated: '應用已建立',
     appCreateFailed: '應用建立失敗',
+    caution: '謹慎',
+    appCreateDSLErrorPart2: '是否要繼續？',
+    appCreateDSLErrorPart3: '目前的應用程式 DSL 版本：',
+    Confirm: '確認',
+    appCreateDSLErrorTitle: '版本不相容',
+    appCreateDSLErrorPart1: '已檢測到 DSL 版本存在顯著差異。強制導入可能會導致應用程式出現故障。',
+    appCreateDSLErrorPart4: '系統支援的 DSL 版本：',
+    appCreateDSLWarning: '注意：DSL 版本差異可能會影響某些功能',
   },
   editApp: '編輯資訊',
   editAppTitle: '編輯應用資訊',
@@ -123,6 +131,15 @@ const translation = {
       removeConfirmContent: '當前配置正在使用中，移除它將關閉追蹤功能。',
     },
   },
+  answerIcon: {
+    descriptionInExplore: '是否使用 WebApp 圖示在 Explore 中取代 🤖',
+    title: '使用 WebApp 圖示取代 🤖',
+    description: '是否在共享應用程式中使用 WebApp 圖示進行取代 🤖',
+  },
+  importFromDSLUrl: '寄件者 URL',
+  importFromDSL: '從 DSL 導入',
+  importFromDSLFile: '從 DSL 檔',
+  importFromDSLUrlPlaceholder: '在此處粘貼 DSL 連結',
 }
 
 export default translation

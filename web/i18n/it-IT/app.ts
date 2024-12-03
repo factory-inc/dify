@@ -68,6 +68,14 @@ const translation = {
     appTypeRequired: 'Seleziona un tipo di app',
     appCreated: 'App creata',
     appCreateFailed: 'Creazione dell\'app fallita',
+    Confirm: 'Confermare',
+    appCreateDSLErrorPart2: 'Vuoi continuare?',
+    appCreateDSLErrorPart3: 'Versione DSL dell\'applicazione corrente:',
+    appCreateDSLErrorPart1: 'È stata rilevata una differenza significativa nelle versioni DSL. Forzare l\'importazione può causare il malfunzionamento dell\'applicazione.',
+    caution: 'Cautela',
+    appCreateDSLErrorTitle: 'Incompatibilità di versione',
+    appCreateDSLWarning: 'Attenzione: la differenza di versione DSL può influire su alcune funzionalità',
+    appCreateDSLErrorPart4: 'Versione DSL supportata dal sistema:',
   },
   editApp: 'Modifica Info',
   editAppTitle: 'Modifica Info App',
@@ -134,7 +142,17 @@ const translation = {
       removeConfirmContent:
         'La configurazione attuale è in uso, rimuovendola disattiverà la funzione di Tracciamento.',
     },
+    view: 'Vista',
   },
+  answerIcon: {
+    description: 'Se utilizzare l\'icona WebApp per la sostituzione 🤖 nell\'applicazione condivisa',
+    title: 'Usa l\'icona WebApp per sostituire 🤖',
+    descriptionInExplore: 'Se utilizzare l\'icona WebApp per sostituirla 🤖 in Esplora',
+  },
+  importFromDSLUrl: 'Dall\'URL',
+  importFromDSLFile: 'Da file DSL',
+  importFromDSL: 'Importazione da DSL',
+  importFromDSLUrlPlaceholder: 'Incolla qui il link DSL',
 }
 
 export default translation

@@ -10,7 +10,7 @@ const translation = {
   pause: 'Приостановить',
   playing: 'Запущено',
   loading: 'Загрузка',
-  merMaind: {
+  merMaid: {
     rerender: 'Перезапустить рендеринг',
   },
   never: 'Никогда',
@@ -77,7 +77,9 @@ const translation = {
     requestBody: 'Тело запроса',
     pathParams: 'Параметры пути',
     query: 'Запрос',
+    toc: 'Содержание',
   },
+  regenerate: 'Регенерировать',
 }
 
 export default translation

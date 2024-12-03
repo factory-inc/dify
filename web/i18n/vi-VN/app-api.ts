@@ -9,7 +9,7 @@ const translation = {
   play: 'Chạy',
   pause: 'Tạm dừng',
   playing: 'Đang chạy',
-  merMaind: {
+  merMaid: {
     rerender: 'Vẽ lại',
   },
   never: 'Không bao giờ',
@@ -76,7 +76,10 @@ const translation = {
     requestBody: 'Nội dung yêu cầu',
     pathParams: 'Tham số đường dẫn',
     query: 'Truy vấn',
+    toc: 'Nội dung',
   },
+  loading: 'Tải',
+  regenerate: 'Tái tạo',
 }
 
 export default translation

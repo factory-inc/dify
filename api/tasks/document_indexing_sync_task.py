@@ -6,7 +6,7 @@ import click
 from celery import shared_task
 from werkzeug.exceptions import NotFound
 
-from core.indexing_runner import DocumentIsPausedException, IndexingRunner
+from core.indexing_runner import DocumentIsPausedError, IndexingRunner
 from core.rag.extractor.notion_extractor import NotionExtractor
 from core.rag.index_processor.index_processor_factory import IndexProcessorFactory
 from extensions.ext_database import db
@@ -67,7 +67,7 @@ def document_indexing_sync_task(dataset_id: str, document_id: str):
         # check the page is updated
         if last_edited_time != page_edited_time:
             document.indexing_status = "parsing"
-            document.processing_started_at = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+            document.processing_started_at = datetime.datetime.now(datetime.UTC).replace(tzinfo=None)
             db.session.commit()
 
             # delete all document segment and index
@@ -106,7 +106,7 @@ def document_indexing_sync_task(dataset_id: str, document_id: str):
                 logging.info(
                     click.style("update document: {} latency: {}".format(document.id, end_at - start_at), fg="green")
                 )
-            except DocumentIsPausedException as ex:
+            except DocumentIsPausedError as ex:
                 logging.info(click.style(str(ex), fg="yellow"))
             except Exception:
                 pass

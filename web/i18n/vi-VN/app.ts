@@ -62,6 +62,14 @@ const translation = {
     appTypeRequired: 'Vui lòng chọn loại ứng dụng',
     appCreated: 'Ứng dụng đã được tạo',
     appCreateFailed: 'Không thể tạo ứng dụng',
+    Confirm: 'Xác nhận',
+    caution: 'Thận trọng',
+    appCreateDSLErrorPart1: 'Một sự khác biệt đáng kể trong các phiên bản DSL đã được phát hiện. Buộc nhập có thể khiến ứng dụng bị trục trặc.',
+    appCreateDSLErrorPart2: 'Bạn có muốn tiếp tục không?',
+    appCreateDSLErrorTitle: 'Phiên bản không tương thích',
+    appCreateDSLErrorPart3: 'Phiên bản DSL ứng dụng hiện tại:',
+    appCreateDSLWarning: 'Phạt cảnh cáo: Sự khác biệt về phiên bản DSL có thể ảnh hưởng đến một số tính năng nhất định',
+    appCreateDSLErrorPart4: 'Phiên bản DSL được hệ thống hỗ trợ:',
   },
   editApp: 'Chỉnh sửa thông tin',
   editAppTitle: 'Chỉnh sửa thông tin ứng dụng',
@@ -122,7 +130,17 @@ const translation = {
       removeConfirmTitle: 'Xóa cấu hình {{key}}?',
       removeConfirmContent: 'Cấu hình hiện tại đang được sử dụng, việc xóa nó sẽ tắt tính năng Theo dõi.',
     },
+    view: 'Cảnh',
   },
+  answerIcon: {
+    description: 'Có nên sử dụng biểu tượng WebApp để thay thế 🤖 trong ứng dụng được chia sẻ hay không',
+    descriptionInExplore: 'Có nên sử dụng biểu tượng WebApp để thay thế 🤖 trong Khám phá hay không',
+    title: 'Sử dụng biểu tượng WebApp để thay thế 🤖',
+  },
+  importFromDSLFile: 'Từ tệp DSL',
+  importFromDSL: 'Nhập từ DSL',
+  importFromDSLUrlPlaceholder: 'Dán liên kết DSL vào đây',
+  importFromDSLUrl: 'Từ URL',
 }
 
 export default translation
