@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import ExternalAPIPanel from '../../components/datasets/external-api/external-api-panel'
 import Datasets from './Datasets'
 import DatasetFooter from './DatasetFooter'
-import ApiServer from './ApiServer'
+import ApiServer from '../../components/develop/ApiServer'
 import Doc from './Doc'
 import TabSliderNew from '@/app/components/base/tab-slider-new'
 import TagManagementModal from '@/app/components/base/tag-management'
@@ -85,7 +85,7 @@ const Container = () => {
 
   return (
     <div ref={containerRef} className='scroll-container relative flex grow flex-col overflow-y-auto bg-background-body'>
-      <div className='sticky top-0 z-10 flex flex-wrap justify-between gap-y-2 bg-background-body px-12 pb-2 pt-4 leading-[56px]'>
+      <div className='sticky top-0 z-10 flex flex-wrap items-center justify-between gap-y-2 bg-background-body px-12 pb-2 pt-4 leading-[56px]'>
         <TabSliderNew
           value={activeTab}
           onChange={newActiveTab => setActiveTab(newActiveTab)}

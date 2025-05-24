@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useEmbeddedChatbotContext } from '../context'
 import Input from '@/app/components/base/input'
@@ -24,7 +24,6 @@ const InputsFormContent = ({ showTip }: Props) => {
     handleNewConversationInputsChange,
   } = useEmbeddedChatbotContext()
   const inputsFormValue = currentConversationId ? currentConversationInputs : newConversationInputs
-  const readonly = !!currentConversationId
 
   const handleFormChange = useCallback((variable: string, value: any) => {
     setCurrentConversationInputs({
@@ -113,4 +112,4 @@ const InputsFormContent = ({ showTip }: Props) => {
   )
 }
 
-export default InputsFormContent
+export default memo(InputsFormContent)

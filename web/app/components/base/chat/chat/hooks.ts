@@ -424,6 +424,8 @@ export const useChat = (
           const response = responseItem as any
           if (thought.message_id && !hasSetResponseId)
             response.id = thought.message_id
+          if (thought.conversation_id)
+            response.conversationId = thought.conversation_id
 
           if (response.agent_thoughts.length === 0) {
             response.agent_thoughts.push(thought)
@@ -512,7 +514,7 @@ export const useChat = (
           responseItem.workflowProcess!.tracing!.push({
             ...iterationStartedData,
             status: WorkflowRunningStatus.Running,
-          } as any)
+          })
           updateCurrentQAOnTree({
             placeholderQuestionId,
             questionItem,
@@ -528,7 +530,7 @@ export const useChat = (
             ...tracing[iterationIndex],
             ...iterationFinishedData,
             status: WorkflowRunningStatus.Succeeded,
-          } as any
+          }
 
           updateCurrentQAOnTree({
             placeholderQuestionId,
@@ -547,7 +549,7 @@ export const useChat = (
           responseItem.workflowProcess!.tracing!.push({
             ...nodeStartedData,
             status: WorkflowRunningStatus.Running,
-          } as any)
+          })
           updateCurrentQAOnTree({
             placeholderQuestionId,
             questionItem,
@@ -590,7 +592,7 @@ export const useChat = (
           responseItem.workflowProcess!.tracing!.push({
             ...loopStartedData,
             status: WorkflowRunningStatus.Running,
-          } as any)
+          })
           updateCurrentQAOnTree({
             placeholderQuestionId,
             questionItem,
@@ -606,7 +608,7 @@ export const useChat = (
             ...tracing[loopIndex],
             ...loopFinishedData,
             status: WorkflowRunningStatus.Succeeded,
-          } as any
+          }
 
           updateCurrentQAOnTree({
             placeholderQuestionId,

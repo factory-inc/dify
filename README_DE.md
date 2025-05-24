@@ -1,4 +1,4 @@
-![cover-v5-optimized](https://github.com/langgenius/dify/assets/13230914/f9e19af5-61ba-4119-b926-d10c4c06ebab)
+![cover-v5-optimized](./images/GitHub_README_if.png)
 
 <p align="center">
   📌 <a href="https://dify.ai/blog/introducing-dify-workflow-file-upload-a-demo-on-ai-podcast">Einführung in Dify Workflow File Upload: Google NotebookLM Podcast nachbilden</a>
@@ -8,7 +8,7 @@
   <a href="https://cloud.dify.ai">Dify Cloud</a> ·
   <a href="https://docs.dify.ai/getting-started/install-self-hosted">Selbstgehostetes</a> ·
   <a href="https://docs.dify.ai">Dokumentation</a> ·
-  <a href="https://udify.app/chat/22L1zSxg6yW1cWQg">Anfrage an Unternehmen</a>
+  <a href="https://dify.ai/pricing">Überblick über die Dify-Produkte</a>
 </p>
 
 <p align="center">
@@ -82,11 +82,6 @@ Bitte beachten Sie unsere [FAQ](https://docs.dify.ai/getting-started/install-sel
 ## Wesentliche Merkmale
 **1. Workflow**: 
   Erstellen und testen Sie leistungsstarke KI-Workflows auf einer visuellen Oberfläche, wobei Sie alle der folgenden Funktionen und darüber hinaus nutzen können.
-
-
-  https://github.com/langgenius/dify/assets/13230914/356df23e-1604-483d-80a6-9517ece318aa
-
-
 
 **2. Umfassende Modellunterstützung**: 
   Nahtlose Integration mit Hunderten von proprietären und Open-Source-LLMs von Dutzenden Inferenzanbietern und selbstgehosteten Lösungen, die GPT, Mistral, Llama3 und alle mit der OpenAI API kompatiblen Modelle abdecken. Eine vollständige Liste der unterstützten Modellanbieter finden Sie [hier](https://docs.dify.ai/getting-started/readme/model-providers).

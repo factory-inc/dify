@@ -1,5 +1,5 @@
 from flask import request
-from flask_restful import marshal, reqparse  # type: ignore
+from flask_restful import marshal, reqparse
 from werkzeug.exceptions import Forbidden, NotFound
 
 import services.dataset_service
@@ -13,6 +13,7 @@ from fields.dataset_fields import dataset_detail_fields
 from libs.login import current_user
 from models.dataset import Dataset, DatasetPermissionEnum
 from services.dataset_service import DatasetPermissionService, DatasetService
+from services.entities.knowledge_entities.knowledge_entities import RetrievalModel
 
 
 def _validate_name(name):
@@ -120,8 +121,11 @@ class DatasetListApi(DatasetApiResource):
             nullable=True,
             required=False,
         )
-        args = parser.parse_args()
+        parser.add_argument("retrieval_model", type=dict, required=False, nullable=True, location="json")
+        parser.add_argument("embedding_model", type=str, required=False, nullable=True, location="json")
+        parser.add_argument("embedding_model_provider", type=str, required=False, nullable=True, location="json")
 
+        args = parser.parse_args()
         try:
             dataset = DatasetService.create_empty_dataset(
                 tenant_id=tenant_id,
@@ -133,6 +137,11 @@ class DatasetListApi(DatasetApiResource):
                 provider=args["provider"],
                 external_knowledge_api_id=args["external_knowledge_api_id"],
                 external_knowledge_id=args["external_knowledge_id"],
+                embedding_model_provider=args["embedding_model_provider"],
+                embedding_model_name=args["embedding_model"],
+                retrieval_model=RetrievalModel(**args["retrieval_model"])
+                if args["retrieval_model"] is not None
+                else None,
             )
         except services.errors.dataset.DatasetNameDuplicateError:
             raise DatasetNameDuplicateError()
@@ -304,7 +313,7 @@ class DatasetApi(DatasetApiResource):
         try:
             if DatasetService.delete_dataset(dataset_id_str, current_user):
                 DatasetPermissionService.clear_partial_member_list(dataset_id_str)
-                return {"result": "success"}, 204
+                return 204
             else:
                 raise NotFound("Dataset not found.")
         except services.errors.dataset.DatasetInUseError:

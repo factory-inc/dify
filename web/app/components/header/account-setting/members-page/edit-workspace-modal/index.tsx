@@ -2,6 +2,7 @@
 import cn from '@/utils/classnames'
 import Modal from '@/app/components/base/modal'
 import Input from '@/app/components/base/input'
+import { WEB_PREFIX } from '@/config'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { useContext } from 'use-context-selector'
@@ -21,7 +22,7 @@ const EditWorkspaceModal = ({
 }: IEditWorkspaceModalProps) => {
   const { t } = useTranslation()
   const { notify } = useContext(ToastContext)
-  const { currentWorkspace, isCurrentWorkspaceOwner, mutateCurrentWorkspace } = useAppContext()
+  const { currentWorkspace, isCurrentWorkspaceOwner } = useAppContext()
   const [name, setName] = useState<string>(currentWorkspace.name)
 
   const changeWorkspaceInfo = async (name: string) => {
@@ -33,9 +34,9 @@ const EditWorkspaceModal = ({
         },
       })
       notify({ type: 'success', message: t('common.actionMsg.modifiedSuccessfully') })
-      location.assign(`${location.origin}`)
+      location.assign(WEB_PREFIX)
     }
-    catch (e) {
+    catch {
       notify({ type: 'error', message: t('common.actionMsg.modifiedUnsuccessfully') })
     }
   }
