@@ -1,51 +1,56 @@
 import json
-from enum import Enum
-from json import JSONDecodeError
-from typing import Optional
+import logging
+from typing import Any
 
-from extensions.ext_redis import redis_client
+from core.tools.entities.api_entities import ToolProviderTypeApiLiteral
+from extensions.ext_redis import redis_client, redis_fallback
 
-
-class ToolProviderCredentialsCacheType(Enum):
-    PROVIDER = "tool_provider"
-    ENDPOINT = "endpoint"
+logger = logging.getLogger(__name__)
 
 
-class ToolProviderCredentialsCache:
-    def __init__(self, tenant_id: str, identity_id: str, cache_type: ToolProviderCredentialsCacheType):
-        self.cache_key = f"{cache_type.value}_credentials:tenant_id:{tenant_id}:id:{identity_id}"
+class ToolProviderListCache:
+    """Cache for tool provider lists"""
 
-    def get(self) -> Optional[dict]:
-        """
-        Get cached model provider credentials.
+    CACHE_TTL = 300  # 5 minutes
 
-        :return:
-        """
-        cached_provider_credentials = redis_client.get(self.cache_key)
-        if cached_provider_credentials:
+    @staticmethod
+    def _generate_cache_key(tenant_id: str, typ: ToolProviderTypeApiLiteral = None) -> str:
+        """Generate cache key for tool providers list"""
+        type_filter = typ or "all"
+        return f"tool_providers:tenant_id:{tenant_id}:type:{type_filter}"
+
+    @staticmethod
+    @redis_fallback(default_return=None)
+    def get_cached_providers(tenant_id: str, typ: ToolProviderTypeApiLiteral = None) -> list[dict[str, Any]] | None:
+        """Get cached tool providers"""
+        cache_key = ToolProviderListCache._generate_cache_key(tenant_id, typ)
+        cached_data = redis_client.get(cache_key)
+        if cached_data:
             try:
-                cached_provider_credentials = cached_provider_credentials.decode("utf-8")
-                cached_provider_credentials = json.loads(cached_provider_credentials)
-            except JSONDecodeError:
+                return json.loads(cached_data.decode("utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                logger.warning("Failed to decode cached tool providers data")
                 return None
+        return None
 
-            return dict(cached_provider_credentials)
+    @staticmethod
+    @redis_fallback()
+    def set_cached_providers(tenant_id: str, typ: ToolProviderTypeApiLiteral, providers: list[dict[str, Any]]):
+        """Cache tool providers"""
+        cache_key = ToolProviderListCache._generate_cache_key(tenant_id, typ)
+        redis_client.setex(cache_key, ToolProviderListCache.CACHE_TTL, json.dumps(providers))
+
+    @staticmethod
+    @redis_fallback()
+    def invalidate_cache(tenant_id: str, typ: ToolProviderTypeApiLiteral = None):
+        """Invalidate cache for tool providers"""
+        if typ:
+            # Invalidate specific type cache
+            cache_key = ToolProviderListCache._generate_cache_key(tenant_id, typ)
+            redis_client.delete(cache_key)
         else:
-            return None
-
-    def set(self, credentials: dict) -> None:
-        """
-        Cache model provider credentials.
-
-        :param credentials: provider credentials
-        :return:
-        """
-        redis_client.setex(self.cache_key, 86400, json.dumps(credentials))
-
-    def delete(self) -> None:
-        """
-        Delete cached model provider credentials.
-
-        :return:
-        """
-        redis_client.delete(self.cache_key)
+            # Invalidate all caches for this tenant
+            pattern = f"tool_providers:tenant_id:{tenant_id}:*"
+            keys = list(redis_client.scan_iter(pattern))
+            if keys:
+                redis_client.delete(*keys)

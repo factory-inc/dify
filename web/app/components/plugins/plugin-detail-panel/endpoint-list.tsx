@@ -68,7 +68,6 @@ const EndpointList = ({ detail }: Props) => {
           {t('plugin.detailPanel.endpoints')}
           <Tooltip
             position='right'
-            needsDelay
             popupClassName='w-[240px] p-4 rounded-xl bg-components-panel-bg-blur border-[0.5px] border-components-panel-border'
             popupContent={
               <div className='flex flex-col gap-2'>
@@ -103,14 +102,16 @@ const EndpointList = ({ detail }: Props) => {
             key={index}
             data={item}
             handleChange={() => invalidateEndpointList(detail.plugin_id)}
+            pluginDetail={detail}
           />
         ))}
       </div>
       {isShowEndpointModal && (
         <EndpointModal
-          formSchemas={formSchemas}
+          formSchemas={formSchemas as any}
           onCancel={hideEndpointModal}
           onSaved={handleCreate}
+          pluginDetail={detail}
         />
       )}
     </div>

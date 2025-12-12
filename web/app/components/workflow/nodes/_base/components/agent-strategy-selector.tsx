@@ -12,7 +12,7 @@ import SearchInput from '@/app/components/base/search-input'
 import Tools from '../../../block-selector/tools'
 import { useTranslation } from 'react-i18next'
 import { useStrategyProviders } from '@/service/use-strategy'
-import { PluginType, type StrategyPluginDetail } from '@/app/components/plugins/types'
+import { PluginCategoryEnum, type StrategyPluginDetail } from '@/app/components/plugins/types'
 import type { ToolWithProvider } from '../../../types'
 import { CollectionType } from '@/app/components/tools/types'
 import useGetIcon from '@/app/components/plugins/install-plugin/base/use-get-icon'
@@ -49,7 +49,6 @@ const NotFoundWarn = (props: {
         </p>
       </div>
     }
-    needsDelay
   >
     <div>
       <RiErrorWarningFill className='size-4 text-text-destructive' />
@@ -94,7 +93,7 @@ export type AgentStrategySelectorProps = {
 }
 
 export const AgentStrategySelector = memo((props: AgentStrategySelectorProps) => {
-    const { enable_marketplace } = useGlobalPublicStore(s => s.systemFeatures)
+  const { enable_marketplace } = useGlobalPublicStore(s => s.systemFeatures)
 
   const { value, onChange, canChooseMCPTool } = props
   const [open, setOpen] = useState(false)
@@ -141,10 +140,9 @@ export const AgentStrategySelector = memo((props: AgentStrategySelectorProps) =>
     if (query) {
       fetchPlugins({
         query,
-        category: PluginType.agent,
+        category: PluginCategoryEnum.agent,
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
   const pluginRef = useRef<ListRef>(null)
@@ -214,7 +212,7 @@ export const AgentStrategySelector = memo((props: AgentStrategySelectorProps) =>
                 agent_strategy_name: tool!.tool_name,
                 agent_strategy_provider_name: tool!.provider_name,
                 agent_strategy_label: tool!.tool_label,
-                agent_output_schema: tool!.output_schema,
+                agent_output_schema: tool!.output_schema || {},
                 plugin_unique_identifier: tool!.provider_id,
                 meta: tool!.meta,
               })
@@ -233,6 +231,7 @@ export const AgentStrategySelector = memo((props: AgentStrategySelectorProps) =>
             list={notInstalledPlugins}
             searchText={query}
             tags={DEFAULT_TAGS}
+            category={PluginCategoryEnum.agent}
             disableMaxWidth
           />}
         </main>

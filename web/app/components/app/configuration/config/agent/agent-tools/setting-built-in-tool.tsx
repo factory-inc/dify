@@ -14,17 +14,21 @@ import Icon from '@/app/components/plugins/card/base/card-icon'
 import OrgInfo from '@/app/components/plugins/card/base/org-info'
 import Description from '@/app/components/plugins/card/base/description'
 import TabSlider from '@/app/components/base/tab-slider-plain'
-
 import Button from '@/app/components/base/button'
 import Form from '@/app/components/header/account-setting/model-provider-page/model-modal/Form'
-import { addDefaultValue, toolParametersToFormSchemas } from '@/app/components/tools/utils/to-form-schema'
+import { toolParametersToFormSchemas } from '@/app/components/tools/utils/to-form-schema'
 import type { Collection, Tool } from '@/app/components/tools/types'
 import { CollectionType } from '@/app/components/tools/types'
 import { fetchBuiltInToolList, fetchCustomToolList, fetchModelToolList, fetchWorkflowToolList } from '@/service/tools'
 import I18n from '@/context/i18n'
-import { getLanguage } from '@/i18n/language'
+import { getLanguage } from '@/i18n-config/language'
 import cn from '@/utils/classnames'
 import type { ToolWithProvider } from '@/app/components/workflow/types'
+import {
+  AuthCategory,
+  PluginAuthInAgent,
+} from '@/app/components/plugins/plugin-auth'
+import { ReadmeEntrance } from '@/app/components/plugins/readme-panel/entrance'
 
 type Props = {
   showBackButton?: boolean
@@ -36,6 +40,8 @@ type Props = {
   readonly?: boolean
   onHide: () => void
   onSave?: (value: Record<string, any>) => void
+  credentialId?: string
+  onAuthorizationItemClick?: (id: string) => void
 }
 
 const SettingBuiltInTool: FC<Props> = ({
@@ -48,6 +54,8 @@ const SettingBuiltInTool: FC<Props> = ({
   readonly,
   onHide,
   onSave,
+  credentialId,
+  onAuthorizationItemClick,
 }) => {
   const { locale } = useContext(I18n)
   const language = getLanguage(locale)
@@ -84,15 +92,11 @@ const SettingBuiltInTool: FC<Props> = ({
           }())
         })
         setTools(list)
-        const currTool = list.find(tool => tool.name === toolName)
-        if (currTool) {
-          const formSchemas = toolParametersToFormSchemas(currTool.parameters)
-          setTempSetting(addDefaultValue(setting, formSchemas))
-        }
       }
       catch { }
       setIsLoading(false)
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collection?.name, collection?.id, collection?.type])
 
   useEffect(() => {
@@ -113,6 +117,8 @@ const SettingBuiltInTool: FC<Props> = ({
       return t('tools.setBuiltInTools.number')
     if (type === 'text-input')
       return t('tools.setBuiltInTools.string')
+    if (type === 'checkbox')
+      return 'boolean'
     if (type === 'file')
       return t('tools.setBuiltInTools.file')
     return type
@@ -184,7 +190,7 @@ const SettingBuiltInTool: FC<Props> = ({
                   onClick={onHide}
                 >
                   <RiArrowLeftLine className='h-4 w-4' />
-                  BACK
+                  {t('plugin.detailPanel.operation.back')}
                 </div>
               )}
               <div className='flex items-center gap-1'>
@@ -197,8 +203,22 @@ const SettingBuiltInTool: FC<Props> = ({
               </div>
               <div className='system-md-semibold mt-1 text-text-primary'>{currTool?.label[language]}</div>
               {!!currTool?.description[language] && (
-                <Description className='mt-3' text={currTool.description[language]} descriptionLineRows={2}></Description>
+                <Description className='mb-2 mt-3 h-auto' text={currTool.description[language]} descriptionLineRows={2}></Description>
               )}
+              {
+                collection.allow_delete && collection.type === CollectionType.builtIn && (
+                  <PluginAuthInAgent
+                    pluginPayload={{
+                      provider: collection.name,
+                      category: AuthCategory.tool,
+                      providerType: collection.type,
+                      detail: collection as any,
+                    }}
+                    credentialId={credentialId}
+                    onAuthorizationItemClick={onAuthorizationItemClick}
+                  />
+                )
+              }
             </div>
             {/* form */}
             <div className='h-full'>
@@ -222,13 +242,14 @@ const SettingBuiltInTool: FC<Props> = ({
                 )}
                 <div className='h-0 grow overflow-y-auto px-4'>
                   {isInfoActive ? infoUI : settingUI}
+                  {!readonly && !isInfoActive && (
+                    <div className='flex shrink-0 justify-end space-x-2 rounded-b-[10px] bg-components-panel-bg py-2'>
+                      <Button className='flex h-8 items-center !px-3 !text-[13px] font-medium ' onClick={onHide}>{t('common.operation.cancel')}</Button>
+                      <Button className='flex h-8 items-center !px-3 !text-[13px] font-medium' variant='primary' disabled={!isValid} onClick={() => onSave?.(tempSetting)}>{t('common.operation.save')}</Button>
+                    </div>
+                  )}
                 </div>
-                {!readonly && !isInfoActive && (
-                  <div className='mt-2 flex shrink-0 justify-end space-x-2 rounded-b-[10px]  border-t border-divider-regular bg-components-panel-bg px-6 py-4'>
-                    <Button className='flex h-8 items-center !px-3 !text-[13px] font-medium ' onClick={onHide}>{t('common.operation.cancel')}</Button>
-                    <Button className='flex h-8 items-center !px-3 !text-[13px] font-medium' variant='primary' disabled={!isValid} onClick={() => onSave?.(addDefaultValue(tempSetting, formSchemas))}>{t('common.operation.save')}</Button>
-                  </div>
-                )}
+                <ReadmeEntrance pluginDetail={collection as any} className='mt-auto' />
               </div>
             </div>
           </>
